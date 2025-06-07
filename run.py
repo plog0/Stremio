@@ -1,11 +1,12 @@
 from fastapi import FastAPI
 from mediaflow_proxy.main import app as mediaflow_app  # Import mediaflow app
-import httpx
-import re
-import string
 
-# Initialize the main FastAPI application
 main_app = FastAPI()
+
+# Add a simple health endpoint
+@main_app.get("/api/health")
+async def health():
+    return {"status": "ok"}
 
 # Manually add only non-static routes from mediaflow_app
 for route in mediaflow_app.routes:
@@ -15,4 +16,4 @@ for route in mediaflow_app.routes:
 # Run the main app
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(main_app, host="0.0.0.0", port=8080)
+    uvicorn.run(main_app, host="0.0.0.0", port=7860)
